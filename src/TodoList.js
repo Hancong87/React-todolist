@@ -31,8 +31,8 @@ class TodoList extends Component {
                 <li 
                   key={index} 
                   onClick={this.handleItemDelete.bind(this, index)}
+                  dangerouslySetInnerHTML={{__html: item}}
                 >
-                  {item}
                 </li>
                 )
             })
