@@ -10,6 +10,9 @@ class TodoList extends Component {
       inputValue: 'hello',
       list: ['learn english', 'learn react']
     }
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleBtnClick = this.handleBtnClick.bind(this);
+    this.handleItemDelete = this.handleItemDelete.bind(this);
   }
   
   render() {
@@ -24,56 +27,76 @@ class TodoList extends Component {
           id="insertArea"
           className='input'
           value={this.state.inputValue}
-          onChange={this.handleInputChange.bind(this)}
+          onChange={this.handleInputChange}
         /> 
-        <button onClick={this.handleBtnClick.bind(this)}>submit</button>
+        <button onClick={this.handleBtnClick}>submit</button>
         <ul>
           {
-            this.state.list.map((item, index) => {
-              return (
-                  <div>
-                      <TodoItem
-                          content={item}
-                          index={index}
-                          deleteItem={this.handleItemDelete.bind(this)}
-                      />
-
-                  {/*<li
-                  key={index} 
-                  onClick={this.handleItemDelete.bind(this, index)}
-                  dangerouslySetInnerHTML={{__html: item}}
-                >
-                </li>*/}
-                  </div>
-                )
-            })
+            this.getTodoItem()
           }
         </ul>
       </Fragment>
     );
   }
 
+  getTodoItem() {
+      return this.state.list.map((item, index) => {
+          return (
+              <div key={index}>
+                  <TodoItem
+                      content={item}
+                      index={index}
+                      deleteItem={this.handleItemDelete}
+                  />
+
+                  {/*<li
+                  key={index}
+                  onClick={this.handleItemDelete.bind(this, index)}
+                  dangerouslySetInnerHTML={{__html: item}}
+                >
+                </li>*/}
+              </div>
+          )
+      })
+  }
+
   handleInputChange(e) {
-    this.setState({
-      inputValue: e.target.value
-    })
+    // this.setState({
+    //   inputValue: e.target.value
+    // })
+      const value = e.target.value;
+      this.setState(()=>({
+          inputValue: value
+      }))
   }
 
   handleBtnClick() {
-    this.setState({
-      list: [...this.state.list, this.state.inputValue],
-      inputValue: ''
-    })
+    // this.setState({
+    //   list: [...this.state.list, this.state.inputValue],
+    //   inputValue: ''
+    // })
+      this.setState((prevState) => ({
+          list: [...prevState.list, prevState.inputValue],
+          inputValue: ''
+      }))
   }
 
   handleItemDelete(index) {
     // immutable
     // state 不允许我们做任何的改变ß
-    const list = [...this.state.list];
-    list.splice(index, 1);
-    this.setState({
-      list: list
-    })
+    // const list = [...this.state.list];
+    // list.splice(index, 1);
+    // this.setState({
+    //   list: list
+    // })
+    //   this.setState(() => ({
+    //       list
+    //   }));
+    this.setState((prevState) => {
+        const list = [...prevState.list];
+        list.splice(index, 1);
+        return {list};
+    });
   }
 }
 
