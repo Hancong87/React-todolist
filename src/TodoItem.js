@@ -15,6 +15,7 @@ class TodoItem extends Component {
 	}
 
 	handleClick() {
+    	// props组件间传值
         // this.props.deleteItem(this.props.index);
 		const { deleteItem, index } = this.props;
 		deleteItem(index);
