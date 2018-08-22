@@ -92,6 +92,7 @@ class TodoList extends Component {
     //   this.setState(() => ({
     //       list
     //   }));
+      //返回js语句就直接用{},返回object就要用({})
     this.setState((prevState) => {
         const list = [...prevState.list];
         list.splice(index, 1);
